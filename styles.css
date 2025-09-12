@@ -17,6 +17,11 @@ div {
      font-size: 25px;
      text-align: center;
      font-family: "Roboto Mono", monospace;
+
+
+     /* depois do createBoard */
+     width: 40px;
+     height: 40px;
 }
 
 

@@ -5,7 +5,10 @@
 .grid {
      height: 400px;
      width: 400px;
-     /* display: flex; */
+
+     display: flex;
+     flex-wrap: wrap;
+
      background-color: #dcd6bc;
      margin-left: 50px;
      margin-top: 20px;
@@ -17,11 +20,13 @@ div {
      font-size: 25px;
      text-align: center;
      font-family: "Roboto Mono", monospace;
+}
 
-
-     /* depois do createBoard */
+.grid div {
      width: 40px;
      height: 40px;
+     border: solid 1px red;
+     box-sizing: border-box;
 }
 
 

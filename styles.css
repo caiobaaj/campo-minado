@@ -22,10 +22,11 @@ div {
      font-family: "Roboto Mono", monospace;
 }
 
-.grid div {
+.valido, .bomba {
      width: 40px;
      height: 40px;
-     border: solid 1px red;
+     border: 5px solid;
+     border-color: #f5f3eb #b3afa0 #bab7a9 #fff9db;
      box-sizing: border-box;
 }
 

@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
     const bandeirasFaltando = document.querySelector('#bandeiras-faltando');
     const resultado = document.querySelector('#resultado');
     const tamanhoEixo = 10;
-    let quantiaBombas = 5;
+    let quantiaBombas = 20;
     let listaQuadrados = [];
     let ehFimDeJogo = false;
+    let bandeiras = 0;
 
     function criaTabuleiro() {        // função responsável pela criação do tabuleiro do jogo
 
@@ -29,9 +30,9 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
                 click(quadrado);
             })
 
-            quadrado.addEventListener('click', function cliqueBandeira() {      // função do clique para colocar bandeiras, botao direito
+            quadrado.addEventListener('contextmenu', function cliqueBandeira() {      // função do clique para colocar bandeiras, botao direito
 
-                //addBandeira(quadrado)
+                addBandeira(quadrado);
             })
         }
 
@@ -173,6 +174,44 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
                 }
             } 
         }, 10)
+    }
+
+    function addBandeira(quadrado) {
+
+        if (ehFimDeJogo) return;
+        if (!quadrado.classList.contains('checado') && (bandeiras < quantiaBombas)) {
+
+            if (!quadrado.classList.contains('bandeira')) {
+
+                quadrado.classList.add('bandeira');
+                bandeiras++;
+                quadrado.innerHTML = '🚩';
+                bandeirasFaltando.innerHTML = quantiaBombas - bandeiras;
+                checarVitoria();
+            } else {
+
+                quadrado.classList.remove('bandeira');
+                bandeiras--;
+                quadrado.innerHTML = '';
+                bandeirasFaltando.innerHTML = quantiaBombas - bandeiras;
+            }
+        }
+    }
+
+    function checarVitoria() {
+
+        let confere = 0;
+        
+        for (let i = 0; i < listaQuadrados.length; i++) {
+        
+            if (listaQuadrados[i].classList.contains('bandeira') && listaQuadrados[i].classList.contains('bomba')) {
+                confere++;
+            }
+            if (confere === quantiaBombas) {
+                resultado.innerHTML = 'PARABÉNS!! Você Venceu!';
+                ehFimDeJogo = true;
+            }
+        }
     }
 })
 

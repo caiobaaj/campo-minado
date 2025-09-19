@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
     const bandeirasFaltando = document.querySelector('#bandeiras-faltando');
     const resultado = document.querySelector('#resultado');
     const tamanhoEixo = 10;
-    let quantiaBombas = 20;
+    let quantiaBombas = 5;
     let listaQuadrados = [];
     let ehFimDeJogo = false;
 
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
         if (ehFimDeJogo || quadrado.classList.contains('checado') || quadrado.classList.contains('bandeira')) return;
 
         if (quadrado.classList.contains('bomba')) {
-            fimDeJogo(quadrado);
+            fimDeJogo();
         } else {
 
             let total = quadrado.getAttribute('data');
@@ -75,15 +75,15 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
                 const nomeNumeros = ['um', 'dois', 'tres', 'quatro', 'cinco', 'seis', 'sete', 'oito'];
                 const valorNumero = parseInt(total) - 1;
                 quadrado.classList.add(nomeNumeros[valorNumero]);
+            } else {
+                varreQuadrados(quadrado);
             }
-
-            // varreQuadrados(quadrado);
         }
         
         quadrado.classList.add('checado');
     }
 
-    function fimDeJogo(quadrado) {
+    function fimDeJogo() {
         
         resultado.innerHTML = 'BOOM!! Fim de Jogo!';
         ehFimDeJogo = true;
@@ -96,6 +96,83 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
                 listaQuadrados[i].classList.add('checado');
             }
         }
+    }
+
+    function varreQuadrados(quadrado) {     // checa quadrados vizinhos que não sejam bombas quando um quadrado vazio é clicado
+
+        const quadradoAtual = quadrado.id;
+        const ehLateralEsquerda = (quadradoAtual % tamanhoEixo === 0);
+        const ehLateralDireita = (quadradoAtual % tamanhoEixo === tamanhoEixo - 1);
+        const ehLateralSuperior = (quadradoAtual < tamanhoEixo);
+        const ehLateralInferior = (quadradoAtual >= tamanhoEixo*(tamanhoEixo - 1));
+
+        setTimeout(function() {
+            
+            if (!ehLateralSuperior && !ehLateralEsquerda) {
+
+                const novoId = parseInt(quadradoAtual) - tamanhoEixo - 1;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralSuperior) {
+
+                const novoId = parseInt(quadradoAtual) - tamanhoEixo;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralSuperior && !ehLateralDireita) {
+
+                const novoId = parseInt(quadradoAtual) - tamanhoEixo + 1;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralEsquerda) {
+
+                const novoId = parseInt(quadradoAtual) - 1;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralDireita) {
+
+                const novoId = parseInt(quadradoAtual) + 1;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralInferior && !ehLateralEsquerda) {
+
+                const novoId = parseInt(quadradoAtual) + tamanhoEixo - 1;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralInferior) {
+
+                const novoId = parseInt(quadradoAtual) + tamanhoEixo;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+            if (!ehLateralInferior && !ehLateralDireita) {
+
+                const novoId = parseInt(quadradoAtual) + tamanhoEixo + 1;
+                const novoQuadrado = document.getElementById(novoId);
+                if (!novoQuadrado.classList.contains('bomba')) {
+                    click(novoQuadrado);
+                }
+            } 
+        }, 10)
     }
 })
 

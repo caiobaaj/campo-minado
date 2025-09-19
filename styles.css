@@ -9,10 +9,10 @@
      display: flex;
      flex-wrap: wrap;
 
-     background-color: #dcd6bc;
+     background-color: #c2c2cd;
      margin-left: 50px;
      margin-top: 20px;
-     border: 10px solid #dcd6bc;
+     border: 10px solid #c2c2cd;
      margin-bottom: 10px;
 }
 
@@ -27,10 +27,11 @@ div {
      font-family: "Roboto Mono", monospace;
 }
 
-.grid div {
+.valido, .bomba  {
      width: 40px;
      height: 40px;
-     border: solid 1px red;
+     border: 5px solid;
+     border-color: #ebeef5 #a1a0a7 #97959a #d6d8dd;
      box-sizing: border-box;
 }
 

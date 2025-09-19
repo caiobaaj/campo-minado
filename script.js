@@ -40,6 +40,32 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
             const lateralDireita = (i % tamanhoEixo === tamanhoEixo - 1);
             const lateralSuperior = (i < tamanhoEixo);
             const lateralInferior = (i >= tamanhoEixo*(tamanhoEixo - 1));
+
+            if (listaQuadrados[i].classList.contains('valido')) {
+
+                /* 
+                
+                listaQuadrados[i - tamanhoEixo - 1].classList.contains('bomba')     NAO PODE LATERAL SUPERIOR   NAO PODE LATERAL ESQUERDA
+                listaQuadrados[i - tamanhoEixo].classList.contains('bomba')         NAO PODE LATERAL SUPERIOR
+                listaQuadrados[i - tamanhoEixo + 1].classList.contains('bomba')     NAO PODE LATERAL SUPERIOR   NAO PODE LATERAL DIREITA
+                listaQuadrados[i - 1].classList.contains('bomba')                                               NAO PODE LATERAL ESQUERDA
+                listaQuadrados[i + 1].classList.contains('bomba')                                               NAO PODE LATERAL DIREITA
+                listaQuadrados[i + tamanhoEixo - 1].classList.contains('bomba')     NAO PODE LATERAL INFERIOR   NAO PODE LATERAL ESQUERDA
+                listaQuadrados[i + tamanhoEixo].classList.contains('bomba')         NAO PODE LATERAL INFERIOR
+                listaQuadrados[i + tamanhoEixo + 1].classList.contains('bomba')     NAO PODE LATERAL INFERIOR   NAO PODE LATERAL DIREITA
+                
+                */
+
+                if (!lateralSuperior && !lateralEsquerda && listaQuadrados[i - tamanhoEixo - 1].classList.contains('bomba')) total++;
+                if (!lateralSuperior && listaQuadrados[i - tamanhoEixo].classList.contains('bomba')) total++;
+                if (!lateralSuperior && !lateralDireita && listaQuadrados[i - tamanhoEixo + 1].classList.contains('bomba')) total++;
+                if (!lateralEsquerda && listaQuadrados[i - 1].classList.contains('bomba')) total++;
+                if (!lateralDireita && listaQuadrados[i + 1].classList.contains('bomba')) total++;
+                if (!lateralInferior && !lateralEsquerda && listaQuadrados[i + tamanhoEixo - 1].classList.contains('bomba')) total++;
+                if (!lateralInferior && listaQuadrados[i + tamanhoEixo].classList.contains('bomba')) total++;
+                if (!lateralInferior && !lateralDireita && listaQuadrados[i + tamanhoEixo + 1].classList.contains('bomba')) total++;
+                listaQuadrados[i].setAttribute('data', total);
+            }
         }
     }
 
@@ -47,10 +73,6 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
 
     function click(quadrado) {
         console.log(quadrado);
-        if (quadrado.id % tamanhoEixo === 0) console.log("parede esquerda");
-        if (quadrado.id % tamanhoEixo === tamanhoEixo - 1) console.log("parede direita");
-        if (quadrado.id < tamanhoEixo) console.log("parede superior");
-        if (quadrado.id >= tamanhoEixo*(tamanhoEixo - 1)) console.log("parede inferior");
     }
 })
 

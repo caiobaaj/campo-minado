@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function documentoCarregado() {      // garante que todo o conteúdo do HTML seja arregado antes das ações do js
-    const grid = document.querySelector('.grid');         
-    const tamanhoEixo = 10;
+    const grid = document.querySelector('.grid');
     const bandeirasFaltando = document.querySelector('#bandeiras-faltando');
+    const resultado = document.querySelector('#resultado');
+    const tamanhoEixo = 10;
     let quantiaBombas = 20;
     let listaQuadrados = [];
+    let ehFimDeJogo = false;
 
-    function createBoard() {        // função responsável pela criação do tabuleiro do jogo
+    function criaTabuleiro() {        // função responsável pela criação do tabuleiro do jogo
 
         bandeirasFaltando.innerHTML = quantiaBombas;
 
@@ -36,43 +38,50 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
         for (let i = 0; i < listaQuadrados.length; i++) {       // atribuição dos valores em cada quadrado
 
             let total = 0;
-            const lateralEsquerda = (i % tamanhoEixo === 0);
-            const lateralDireita = (i % tamanhoEixo === tamanhoEixo - 1);
-            const lateralSuperior = (i < tamanhoEixo);
-            const lateralInferior = (i >= tamanhoEixo*(tamanhoEixo - 1));
+            const ehLateralEsquerda = (i % tamanhoEixo === 0);
+            const ehLateralDireita = (i % tamanhoEixo === tamanhoEixo - 1);
+            const ehLateralSuperior = (i < tamanhoEixo);
+            const ehLateralInferior = (i >= tamanhoEixo*(tamanhoEixo - 1));
 
-            if (listaQuadrados[i].classList.contains('valido')) {
+            if (listaQuadrados[i].classList.contains('valido')) {       // confere a classe de todos os vizinhos para o somatório de bombas adjacentes
 
-                /* 
-                
-                listaQuadrados[i - tamanhoEixo - 1].classList.contains('bomba')     NAO PODE LATERAL SUPERIOR   NAO PODE LATERAL ESQUERDA
-                listaQuadrados[i - tamanhoEixo].classList.contains('bomba')         NAO PODE LATERAL SUPERIOR
-                listaQuadrados[i - tamanhoEixo + 1].classList.contains('bomba')     NAO PODE LATERAL SUPERIOR   NAO PODE LATERAL DIREITA
-                listaQuadrados[i - 1].classList.contains('bomba')                                               NAO PODE LATERAL ESQUERDA
-                listaQuadrados[i + 1].classList.contains('bomba')                                               NAO PODE LATERAL DIREITA
-                listaQuadrados[i + tamanhoEixo - 1].classList.contains('bomba')     NAO PODE LATERAL INFERIOR   NAO PODE LATERAL ESQUERDA
-                listaQuadrados[i + tamanhoEixo].classList.contains('bomba')         NAO PODE LATERAL INFERIOR
-                listaQuadrados[i + tamanhoEixo + 1].classList.contains('bomba')     NAO PODE LATERAL INFERIOR   NAO PODE LATERAL DIREITA
-                
-                */
-
-                if (!lateralSuperior && !lateralEsquerda && listaQuadrados[i - tamanhoEixo - 1].classList.contains('bomba')) total++;
-                if (!lateralSuperior && listaQuadrados[i - tamanhoEixo].classList.contains('bomba')) total++;
-                if (!lateralSuperior && !lateralDireita && listaQuadrados[i - tamanhoEixo + 1].classList.contains('bomba')) total++;
-                if (!lateralEsquerda && listaQuadrados[i - 1].classList.contains('bomba')) total++;
-                if (!lateralDireita && listaQuadrados[i + 1].classList.contains('bomba')) total++;
-                if (!lateralInferior && !lateralEsquerda && listaQuadrados[i + tamanhoEixo - 1].classList.contains('bomba')) total++;
-                if (!lateralInferior && listaQuadrados[i + tamanhoEixo].classList.contains('bomba')) total++;
-                if (!lateralInferior && !lateralDireita && listaQuadrados[i + tamanhoEixo + 1].classList.contains('bomba')) total++;
+                if (!ehLateralSuperior && !ehLateralEsquerda && listaQuadrados[i - tamanhoEixo - 1].classList.contains('bomba'))    total++;
+                if (!ehLateralSuperior && listaQuadrados[i - tamanhoEixo].classList.contains('bomba'))                              total++;
+                if (!ehLateralSuperior && !ehLateralDireita && listaQuadrados[i - tamanhoEixo + 1].classList.contains('bomba'))     total++;
+                if (!ehLateralEsquerda && listaQuadrados[i - 1].classList.contains('bomba'))                                        total++;
+                if (!ehLateralDireita && listaQuadrados[i + 1].classList.contains('bomba'))                                         total++;
+                if (!ehLateralInferior && !ehLateralEsquerda && listaQuadrados[i + tamanhoEixo - 1].classList.contains('bomba'))    total++;
+                if (!ehLateralInferior && listaQuadrados[i + tamanhoEixo].classList.contains('bomba'))                              total++;
+                if (!ehLateralInferior && !ehLateralDireita && listaQuadrados[i + tamanhoEixo + 1].classList.contains('bomba'))     total++;
                 listaQuadrados[i].setAttribute('data', total);
             }
         }
     }
 
-    createBoard();
+    criaTabuleiro();
 
     function click(quadrado) {
-        console.log(quadrado);
+
+        if (ehFimDeJogo || quadrado.classList.contains('checado') || quadrado.classList.contains('bandeira')) return;
+
+        if (quadrado.classList.contains('bomba')) {
+            fimDeJogo(quadrado);
+        }
+    }
+
+    function fimDeJogo(quadrado) {
+        
+        resultado.innerHTML = 'BOOM!! Fim de Jogo!';
+        ehFimDeJogo = true;
+
+        for (let i = 0; i < listaQuadrados.length; i++) {
+        
+            if (listaQuadrados[i].classList.contains('bomba')){
+                listaQuadrados[i].innerHTML = '💣';
+                listaQuadrados[i].classList.remove('bomba');
+                listaQuadrados[i].classList.add('checado');
+            }
+        }
     }
 })
 

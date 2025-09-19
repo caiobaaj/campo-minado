@@ -27,18 +27,20 @@ div {
      font-family: "Roboto Mono", monospace;
 }
 
-.valido, .bomba  {
+.valido, .bomba, .checado  {
      width: 40px;
      height: 40px;
-     border: 5px solid;
-     border-color: #ebeef5 #a1a0a7 #97959a #d6d8dd;
      box-sizing: border-box;
 }
 
-.bomba {
-     background-color: red;
+.valido, .bomba {
+     border: 5px solid;
+     border-color: #ebeef5 #a1a0a7 #97959a #d6d8dd;
 }
 
-
-
+.checado {
+     border: 3px solid;
+     background-color: #afafb9;
+     border-color: #a0a0a7;
+}
 

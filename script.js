@@ -66,7 +66,21 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
 
         if (quadrado.classList.contains('bomba')) {
             fimDeJogo(quadrado);
+        } else {
+
+            let total = quadrado.getAttribute('data');
+            if (total != 0) {
+
+                quadrado.innerHTML = total;
+                const nomeNumeros = ['um', 'dois', 'tres', 'quatro', 'cinco', 'seis', 'sete', 'oito'];
+                const valorNumero = parseInt(total) - 1;
+                quadrado.classList.add(nomeNumeros[valorNumero]);
+            }
+
+            // varreQuadrados(quadrado);
         }
+        
+        quadrado.classList.add('checado');
     }
 
     function fimDeJogo(quadrado) {

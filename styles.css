@@ -21,11 +21,6 @@ div {
      text-align: center;
      font-family: "Roboto Mono", monospace;
 }
-div {
-     font-size: 25px;
-     text-align: center;
-     font-family: "Roboto Mono", monospace;
-}
 
 .valido, .bomba, .checado  {
      width: 40px;
@@ -38,9 +33,48 @@ div {
      border-color: #ebeef5 #a1a0a7 #97959a #d6d8dd;
 }
 
+.valido {
+     padding-top: 3px;
+     padding-left: 1px;
+     font-family: "Nova Square", sans-serif;
+     font-weight: bold;
+}
+
 .checado {
      border: 3px solid;
      background-color: #afafb9;
      border-color: #a0a0a7;
+}
+
+.um {
+     color: #155087;
+}
+
+.dois {
+     color: #873215;
+}
+
+.tres {
+     color: #15873f;
+}
+
+.quatro {
+     color: #871578;
+}
+
+.cinco {
+     color: #877f15;
+}
+
+.seis {
+     color: #265e00;
+}
+
+.sete {
+     color: #002a54;
+}
+
+.oito {
+     color: #2c0000;
 }
 

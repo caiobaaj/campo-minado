@@ -25,14 +25,13 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
             grid.appendChild(quadrado);
             listaQuadrados.push(quadrado);
             
-            quadrado.addEventListener('click', function cliqueNormal() {        // função do clique com botão esquerdo, apenas revela o bloco clicado
+            quadrado.addEventListener('click', function cliqueNormal(event) {        // função do clique com botão esquerdo, apenas revela o bloco clicado
 
-                click(quadrado);
-            })
-
-            quadrado.addEventListener('contextmenu', function cliqueBandeira() {      // função do clique para colocar bandeiras, botao direito
-
-                addBandeira(quadrado);
+                if (event.ctrlKey) {
+                    addBandeira(quadrado);
+                }else {
+                    click(quadrado);
+                }
             })
         }
 
@@ -82,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
         }
         
         quadrado.classList.add('checado');
+        checarVitoria();
     }
 
     function fimDeJogo() {
@@ -179,16 +179,17 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
     function addBandeira(quadrado) {
 
         if (ehFimDeJogo) return;
-        if (!quadrado.classList.contains('checado') && (bandeiras < quantiaBombas)) {
+        if (!quadrado.classList.contains('checado')) {
 
-            if (!quadrado.classList.contains('bandeira')) {
+            if (!quadrado.classList.contains('bandeira') && (bandeiras < quantiaBombas)) {
 
                 quadrado.classList.add('bandeira');
                 bandeiras++;
                 quadrado.innerHTML = '🚩';
                 bandeirasFaltando.innerHTML = quantiaBombas - bandeiras;
                 checarVitoria();
-            } else {
+                
+            } else if (quadrado.classList.contains('bandeira')){
 
                 quadrado.classList.remove('bandeira');
                 bandeiras--;
@@ -200,14 +201,15 @@ document.addEventListener('DOMContentLoaded', function documentoCarregado() {   
 
     function checarVitoria() {
 
-        let confere = 0;
+        let confereBandeira = 0;
+        let confereChecado = 0;
         
         for (let i = 0; i < listaQuadrados.length; i++) {
         
-            if (listaQuadrados[i].classList.contains('bandeira') && listaQuadrados[i].classList.contains('bomba')) {
-                confere++;
-            }
-            if (confere === quantiaBombas) {
+            if (listaQuadrados[i].classList.contains('bandeira') && listaQuadrados[i].classList.contains('bomba')) confereBandeira++;
+            if (listaQuadrados[i].classList.contains('valido') && listaQuadrados[i].classList.contains('checado')) confereChecado++;
+
+            if (confereBandeira === quantiaBombas && confereChecado === listaQuadrados.length - quantiaBombas) {
                 resultado.innerHTML = 'PARABÉNS!! Você Venceu!';
                 ehFimDeJogo = true;
             }

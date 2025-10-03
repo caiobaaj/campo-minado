@@ -31,9 +31,6 @@ div {
 .valido, .bomba {
      border: 5px solid;
      border-color: #ebeef5 #a1a0a7 #97959a #d6d8dd;
-}
-
-.valido {
      padding-top: 3px;
      padding-left: 1px;
      font-family: "Nova Square", sans-serif;
@@ -47,7 +44,8 @@ div {
 }
 
 .bandeira {
-     
+     padding: 0px 0px 0px 0px;
+     font-size: 90%;
 }
 
 .um {
